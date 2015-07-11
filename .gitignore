@@ -1,0 +1,6 @@
+.DS_STORE
+
+android/bin/**
+android/gen/**
+android/libs/**
+android/obj/**
