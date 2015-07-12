@@ -1,5 +1,5 @@
 #include "App.h"
-//#include "Timer.h"
+#include "Timer.h"
 
 static App* _appInstance = nullptr;
 
@@ -15,20 +15,20 @@ App::~App() {}
 
 bool App::init(const char* title) {
 	
-	// Get display size since we're on mobile
-	SDL_DisplayMode displayMode;
-	if (SDL_GetCurrentDisplayMode(0, &displayMode) == 0) {
-		_resX = displayMode.w;
-		_resY = displayMode.h;
-	}
-	
-	
 	// Init SDL
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error initializing SDL: %s\n", SDL_GetError());
 		return false;
 	}
 	
+	// Get display size since we're on mobile
+	SDL_DisplayMode displayMode;
+	if (SDL_GetCurrentDisplayMode(0, &displayMode) == 0) {
+		_resX = displayMode.w;
+		_resY = displayMode.h;
+	} else {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error retrieving display mode: %s", SDL_GetError());
+	}
 	
 	
 	
@@ -49,6 +49,8 @@ bool App::init(const char* title) {
 	SDL_GetVersion(&v);
 	SDL_Log("SDL version: %d.%d.%d\n", v.major, v.minor, v.patch);
 	
+	
+	if (!_scene.init()) return false;
 	
 	
 	return true;
@@ -76,15 +78,18 @@ void App::handleEvents() {
 
 
 void App::update() {
-	const uint32_t curTime = SDL_GetTicks();
+	const uint32_t curTime = Timer::getTimeMs();
 	int loops = 0;
 	
 	
 	while(curTime > _nextTick && loops < MAX_FRAMESKIP) {
 		// Update stuff here
+		_scene.update();
 		
 		_nextTick += SKIP_TICKS;
 		++loops;
+		
+		_fps.update();
 	}
 	
 	//float t = float(curTime + SKIP_TICKS - _nextTick) / (float)SKIP_TICKS;
@@ -95,6 +100,7 @@ void App::render() {
 	SDL_RenderClear(_renderer);
 	
 	// Render stuff here
+	_scene.render();
 	
 	SDL_RenderPresent(_renderer);
 }

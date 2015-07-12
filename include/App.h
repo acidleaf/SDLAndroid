@@ -2,6 +2,8 @@
 #define __APP_H__
 
 #include "pch.hpp"
+#include "FPS.h"
+#include "MainScene.h"
 
 class App {
 private:
@@ -17,7 +19,8 @@ private:
 	
 	uint32_t _nextTick = 0;
 	
-	
+	FPSCounter _fps;
+	MainScene _scene;
 	
 public:
 	App();
