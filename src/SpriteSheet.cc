@@ -69,7 +69,7 @@ void SpriteSheet::release() {
 	if (_subTex) delete[] _subTex;
 }
 
-Sprite SpriteSheet::getSprite(const char* name) {
+Sprite SpriteSheet::getSprite(const char* name) const {
 	for (int i = 0; i < _numChildren; ++i) {
 		if (!strcmp(_subTex[i].name, name)) {
 			Sprite s;
@@ -79,9 +79,23 @@ Sprite SpriteSheet::getSprite(const char* name) {
 				(int)_subTex[i].size.x,
 				(int)_subTex[i].size.y
 			});
-			SDL_Log(name);
 			return s;
 		}
 	}
 	SDL_Log("Error: %s not found in sprite sheet", name);
+}
+
+bool SpriteSheet::getTexture(const char* name, SDL_Texture*& texture, SDL_Rect& rect) const {
+	for (int i = 0; i < _numChildren; ++i) {
+		if (!strcmp(_subTex[i].name, name)) {
+			texture = _tex;
+			rect.x = (int)_subTex[i].pos.x;
+			rect.y = (int)_subTex[i].pos.y;
+			rect.w = (int)_subTex[i].size.x;
+			rect.h = (int)_subTex[i].size.y;
+			return true;
+		}
+	}
+	SDL_Log("Error: %s not found in sprite sheet", name);
+	return false;
 }

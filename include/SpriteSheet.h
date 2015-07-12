@@ -31,7 +31,8 @@ public:
 	
 	size_t numChildren() const { return _numChildren; }
 	
-	Sprite getSprite(const char* name);
+	Sprite getSprite(const char* name) const;
+	bool getTexture(const char* name, SDL_Texture*& texture, SDL_Rect& rect) const;
 };
 
 #endif

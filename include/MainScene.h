@@ -4,6 +4,8 @@
 #include "IScene.h"
 #include "Sprite.h"
 #include "SpriteSheet.h"
+#include "Button.h"
+
 
 class MainScene : public IScene {
 protected:
@@ -11,6 +13,8 @@ protected:
 	SpriteSheet _ss;
 	
 	glm::vec2 _v;
+	
+	Button _btn;
 	
 public:
 	bool init();
