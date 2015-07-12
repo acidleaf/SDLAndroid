@@ -67,6 +67,7 @@ bool SpriteSheet::init(const char* filename) {
 
 void SpriteSheet::release() {
 	if (_subTex) delete[] _subTex;
+	SDL_DestroyTexture(_tex);
 }
 
 Sprite SpriteSheet::getSprite(const char* name) const {

@@ -10,11 +10,9 @@ bool MainScene::init() {
 	_s1.anchor(0.5f, 0.5f);
 	_s1.pos(app->resX() / 2, app->resY() / 2);
 	
-	
 	_s2 = _ss.getSprite("circle.png");
 	_s2.anchor(0.5f, 0.5f);
 	_s2.pos(_s2.size().x / 2, _s2.size().y / 2);
-	
 	
 	if (!_btn.init(_ss, "btn_normal.png", "btn_pressed.png")) return false;
 	_btn.anchor(0.5f, 0.5f);
@@ -35,6 +33,7 @@ void MainScene::update() {
 	if (_btn.pressed()) return;
 	
 	auto app = App::getInstance();
+	
 	_s2.pos() += _v;
 	if (_s2.pos().x < _s2.size().x / 2) {
 		_s2.pos().x = _s2.size().x / 2;
@@ -43,7 +42,6 @@ void MainScene::update() {
 		_s2.pos().x = app->resX() - _s2.size().x / 2;
 		_v.x *= -1;
 	}
-	
 }
 
 void MainScene::render() {

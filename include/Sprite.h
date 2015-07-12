@@ -11,6 +11,8 @@ protected:
 	glm::ivec2 _size{0, 0};
 	glm::vec2 _pos{0, 0}, _anchor{0, 0};
 	
+	float _alpha = 1.0f;
+	
 public:
 	Sprite() {}
 	virtual ~Sprite() {}
@@ -28,6 +30,8 @@ public:
 	
 	virtual void pos(float x, float y) { _pos = {x, y}; }
 	virtual glm::vec2& pos() { return _pos; }
+	
+	virtual float& alpha() { return _alpha; }
 	
 	virtual const glm::ivec2& size() const { return _size; }
 };

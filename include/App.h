@@ -4,6 +4,8 @@
 #include "pch.hpp"
 #include "FPS.h"
 #include "MainScene.h"
+#include "SceneManager.h"
+
 
 class App {
 private:
@@ -21,7 +23,8 @@ private:
 	uint32_t _nextTick = 0;
 	
 	FPSCounter _fps;
-	MainScene _scene;
+	SceneManager _scene;
+	MainScene _scene1, _scene2;
 	
 	static int eventFilter(void* ptr, SDL_Event* e);
 	

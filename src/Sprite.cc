@@ -19,7 +19,6 @@ bool Sprite::init(const char* file) {
 	SDL_UnlockSurface(surf);
 	
 	_tex = SDL_CreateTextureFromSurface(App::getInstance()->renderer(), surf);
-	
 	SDL_FreeSurface(surf);
 	if (data) delete[] data;
 	
@@ -80,5 +79,9 @@ void Sprite::release() {
 void Sprite::render() {
 	glm::vec2 dstPos = _pos - ((glm::vec2)_size * _anchor);
 	SDL_Rect dst{ (int)dstPos.x, (int)dstPos.y, _size.x, _size.y };
+	
+	
+	SDL_SetTextureAlphaMod(_tex, _alpha * 255);	// Set alpha
 	SDL_RenderCopy(App::getInstance()->renderer(), _tex, &_srcRect, &dst);
+	SDL_SetTextureAlphaMod(_tex, 255);			// Reset alpha
 }

@@ -26,13 +26,13 @@ protected:
 	glm::ivec2 _size{0, 0};
 	
 public:
-	bool init(const char* file);
-	void release();
+	virtual bool init(const char* file);
+	virtual void release();
 	
-	size_t numChildren() const { return _numChildren; }
+	virtual size_t numChildren() const { return _numChildren; }
 	
-	Sprite getSprite(const char* name) const;
-	bool getTexture(const char* name, SDL_Texture*& texture, SDL_Rect& rect) const;
+	virtual Sprite getSprite(const char* name) const;
+	virtual bool getTexture(const char* name, SDL_Texture*& texture, SDL_Rect& rect) const;
 };
 
 #endif

@@ -50,12 +50,14 @@ bool App::init(const char* title) {
 	
 	
 	if (!_scene.init()) return false;
+	_scene.replace(&_scene1);
 	
 	
 	return true;
 }
 
 void App::release() {
+	_scene.release();
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
 	SDL_Quit();
@@ -73,8 +75,10 @@ void App::handleEvents() {
 		
 		_scene.handleEvents(e);
 		
-		// Quit when ESC key is pressed
-		// if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) _done = true;
+		if (e.type == SDL_FINGERDOWN) {
+			if (_scene.activeScene() == &_scene1) _scene.replace(&_scene2);
+			else if (_scene.activeScene() == &_scene2) _scene.replace(&_scene1);
+		}
 	}
 }
 
