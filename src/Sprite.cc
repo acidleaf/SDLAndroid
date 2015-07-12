@@ -1,12 +1,11 @@
 #include "Sprite.h"
 #include "App.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "Utils.h"
 
 bool Sprite::init(const char* file) {
 	// We force 4 channel textures for now
-	uint8_t* data = loadPNG(file);
+	uint8_t* data = loadPNG(file, &_size.x, &_size.y);
 	if (!data) {
 		printf("Error loading texture: %s\n", file);
 		return false;
@@ -60,11 +59,17 @@ bool Sprite::init(uint8_t* data, int w, int h, int bpp) {
 		}
 	}
 	SDL_UnlockSurface(surf);
-	
 	_tex = SDL_CreateTextureFromSurface(App::getInstance()->renderer(), surf);
-	
 	SDL_FreeSurface(surf);
 	
+	return true;
+}
+
+bool Sprite::init(SDL_Texture* tex, SDL_Rect rect) {
+	if (!tex) return false;
+	_tex = tex;
+	_srcRect = rect;
+	_size = {rect.w, rect.h};
 	return true;
 }
 
@@ -76,31 +81,4 @@ void Sprite::render() {
 	glm::vec2 dstPos = _pos - ((glm::vec2)_size * _anchor);
 	SDL_Rect dst{ (int)dstPos.x, (int)dstPos.y, _size.x, _size.y };
 	SDL_RenderCopy(App::getInstance()->renderer(), _tex, &_srcRect, &dst);
-}
-
-
-uint8_t* Sprite::loadPNG(const char* filename) {
-	// Load the PNG data into memory
-	SDL_RWops* pngFile = SDL_RWFromFile(filename, "rb");
-	if (!pngFile) {
-		SDL_Log("Error loading image: %s", filename);
-		return nullptr;
-	}
-	
-	Sint64 pngSize = SDL_RWseek(pngFile, 0, RW_SEEK_END);
-	SDL_RWseek(pngFile, 0, RW_SEEK_SET);
-	
-	uint8_t* pngData = new uint8_t[pngSize];
-	SDL_RWread(pngFile, pngData, pngSize, 1);
-	SDL_RWclose(pngFile);
-	
-	uint8_t* imgData = stbi_load_from_memory(pngData, pngSize, &_size.x, &_size.y, nullptr, 4);
-	if (!imgData) {
-		SDL_Log("Invalid image: %s", filename);
-		if (pngData) delete[] pngData;
-		return nullptr;
-	}
-	
-	if (pngData) delete[] pngData;
-	return imgData;
 }

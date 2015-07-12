@@ -3,10 +3,14 @@
 
 #include "IScene.h"
 #include "Sprite.h"
+#include "SpriteSheet.h"
 
 class MainScene : public IScene {
 protected:
 	Sprite _s1, _s2;
+	SpriteSheet _ss;
+	
+	glm::vec2 _v;
 	
 public:
 	bool init();

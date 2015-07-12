@@ -15,12 +15,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(GLM_PATH)/include \
 					$(LOCAL_PATH)/$(SRC_PATH)/include/utils
 
 
-FILE_LIST := $(wildcard $(LOCAL_PATH)/$(SRC_PATH)/src/*.cc) \
-				$(wildcard $(LOCAL_PATH)/$(SRC_PATH)/utils/*.cc) \
+FILE_LIST := $(wildcard $(LOCAL_PATH)/$(SRC_PATH)/src/*.cc)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/$(SRC_PATH)/src/**/*.cc)
 
 # Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
-    $(FILE_LIST:$(LOCAL_PATH)/%=%)
+    				$(FILE_LIST:$(LOCAL_PATH)/%=%)
 
 LOCAL_SHARED_LIBRARIES := SDL2
 

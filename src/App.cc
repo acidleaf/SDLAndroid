@@ -8,11 +8,6 @@ App*& App::getInstance() {
 	return _appInstance;
 }
 
-
-App::App() {}
-
-App::~App() {}
-
 bool App::init(const char* title) {
 	
 	// Init SDL
@@ -38,12 +33,16 @@ bool App::init(const char* title) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error creating window: %s\n", SDL_GetError());
 		return false;
 	}
-	
+	// Init renderer
 	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!_renderer) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error creating renderer: %s\n", SDL_GetError());
 		return false;
 	}
+	
+	// Setup event filters to handle entering background
+	SDL_SetEventFilter(eventFilter, this);
+	
 	
 	SDL_version v;
 	SDL_GetVersion(&v);
@@ -66,18 +65,24 @@ void App::release() {
 
 
 void App::handleEvents() {
+	if (_paused) return;
+	
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) _done = true;
 		
+		_scene.handleEvents(e);
+		
 		// Quit when ESC key is pressed
-		if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) _done = true;
+		// if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) _done = true;
 	}
 }
 
 
 
 void App::update() {
+	if (_paused) return;
+	
 	const uint32_t curTime = Timer::getTimeMs();
 	int loops = 0;
 	
@@ -103,4 +108,16 @@ void App::render() {
 	_scene.render();
 	
 	SDL_RenderPresent(_renderer);
+}
+
+
+int App::eventFilter(void* ptr, SDL_Event* e) {
+	App* app = (App*)ptr;
+	if (e->type == SDL_APP_DIDENTERBACKGROUND) {
+		app->_paused = true;
+	} else if (e->type == SDL_APP_DIDENTERFOREGROUND) {
+		app->_paused = false;
+		app->_nextTick = Timer::getTimeMs();
+	}
+	return 1;
 }

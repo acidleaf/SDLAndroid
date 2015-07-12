@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TextureAtlas imagePath="ss-default.png">
+    <SubTexture name="circle.png"
+                x="117.0"
+                y="232.0"
+                width="101.0"
+                height="101.0"
+                frameX="-0.0"
+                frameY="-0.0"
+                frameWidth="101.0"
+                frameHeight="101.0" />
+    <SubTexture name="logo.png"
+                x="2.0"
+                y="232.0"
+                width="113.0"
+                height="101.0"
+                frameX="-0.0"
+                frameY="-0.0"
+                frameWidth="113.0"
+                frameHeight="101.0" />
+    <SubTexture name="made-with-zwoptex"
+                x="2.0"
+                y="2.0"
+                width="228.0"
+                height="228.0"
+                frameX="-0.0"
+                frameY="-0.0"
+                frameWidth="228.0"
+                frameHeight="228.0" />
+</TextureAtlas>

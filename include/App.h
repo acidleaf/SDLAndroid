@@ -16,16 +16,16 @@ private:
 	
 	int _resX, _resY;
 	bool _done = false;
+	bool _paused = false;
 	
 	uint32_t _nextTick = 0;
 	
 	FPSCounter _fps;
 	MainScene _scene;
 	
-public:
-	App();
-	~App();
+	static int eventFilter(void* ptr, SDL_Event* e);
 	
+public:
 	bool init(const char* title);
 	void release();
 	
