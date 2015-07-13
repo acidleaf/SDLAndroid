@@ -165,6 +165,7 @@ void SceneManager::render() {
 }
 
 void SceneManager::handleEvents(const SDL_Event& e) {
+	if (_transitioning || _preloading) return;
 	if (_curScene < 0 || !_scenes[_curScene]) return;
 	_scenes[_curScene]->handleEvents(e);
 }

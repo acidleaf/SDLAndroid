@@ -14,9 +14,13 @@ bool MainScene::init() {
 	_s2.anchor(0.5f, 0.5f);
 	_s2.pos(_s2.size().x / 2, _s2.size().y / 2);
 	
-	if (!_btn.init(_ss, "btn_normal.png", "btn_pressed.png")) return false;
+	if (!_btn.init(&_ss, "btn_normal.png", "btn_pressed.png")) return false;
 	_btn.anchor(0.5f, 0.5f);
 	_btn.pos(app->resX() / 2, 300);
+	_btn.onClick([](Button* target, void* obj) {
+		auto caller = (MainScene*)obj;
+		caller->btnClicked(target);
+	}, this);
 	
 	_v.x = 8.0f;
 	
@@ -30,8 +34,6 @@ void MainScene::release() {
 }
 
 void MainScene::update() {
-	if (_btn.pressed()) return;
-	
 	auto app = App::getInstance();
 	
 	_s2.pos() += _v;
@@ -53,9 +55,15 @@ void MainScene::render() {
 
 void MainScene::handleEvents(const SDL_Event& e) {
 	auto app = App::getInstance();
+	if (_btn.handleEvents(e)) return;
+	
 	if (e.type == SDL_FINGERDOWN) {
 		_s2.pos(app->resX() * e.tfinger.x, app->resY() * e.tfinger.y);
 	}
-	
-	_btn.handleEvents(e);
+}
+
+
+void MainScene::btnClicked(Button* target) {
+	auto app = App::getInstance();
+	_s2.pos(app->resX() / 2, app->resY() / 2);
 }

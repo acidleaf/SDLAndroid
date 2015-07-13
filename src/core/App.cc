@@ -50,7 +50,7 @@ bool App::init(const char* title) {
 	
 	
 	if (!_scene.init()) return false;
-	_scene.push(&_scene1, false);
+	_scene.push(_scene.mainMenu(), false);
 	
 	
 	return true;
@@ -75,6 +75,7 @@ void App::handleEvents() {
 		
 		_scene.handleEvents(e);
 		
+		/*
 		if (e.type == SDL_FINGERDOWN) {
 			if (_scene.activeScene() == &_scene1) _scene.push(&_scene2);
 			//else if (_scene.activeScene() == &_scene2) _scene.replace(&_scene1);
@@ -83,6 +84,7 @@ void App::handleEvents() {
 				_scene.pop();
 			}
 		}
+		*/
 	}
 }
 

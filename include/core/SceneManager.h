@@ -5,6 +5,10 @@
 #include "Sprite.h"
 #include "Tween.h"
 
+// Major scenes should be here
+#include "MainMenu.h"
+#include "MainScene.h"
+
 enum TransitionType {
 	TRANSITION_NONE,
 	TRANSITION_REPLACE,
@@ -28,6 +32,11 @@ protected:
 	bool _preloading = false;
 	bool _transitioning = false;
 	
+	// Scenes
+	MainMenu _mainMenu;
+	MainScene _mainScene;
+	
+	
 	
 	void fadeOut();
 	void fadeIn();
@@ -46,6 +55,9 @@ public:
 	void pop(bool transition = true);
 	
 	IScene* activeScene();
+	
+	MainMenu* mainMenu() { return &_mainMenu; }
+	MainScene* mainScene() { return &_mainScene; }
 };
 
 #endif

@@ -11,8 +11,8 @@ bool SpriteSheet::init(const char* filename) {
 	pugi::xml_parse_result result = doc.load_buffer_inplace(xmlData, xmlSize);
 	
 	if (!result) {
-		SDL_Log("Error parsing document %s: %s\n", filename, result.description());
-		SDL_Log("  at offset: %td\n", result.offset);
+		SDL_Log("Error loading document %s: %s", filename, result.description());
+		SDL_Log("  at offset: %td", result.offset);
 		return false;
 	}
 	

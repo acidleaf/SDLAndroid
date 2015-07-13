@@ -1,20 +1,15 @@
-#ifndef __MAINSCENE_H__
-#define __MAINSCENE_H__
+#ifndef __MAINMENU_H__
+#define __MAINMENU_H__
 
+#include "pch.hpp"
 #include "IScene.h"
-#include "Sprite.h"
 #include "SpriteSheet.h"
 #include "Button.h"
 
-
-class MainScene : public IScene {
+class MainMenu : public IScene {
 protected:
-	Sprite _s1, _s2;
 	SpriteSheet _ss;
-	
-	glm::vec2 _v;
-	
-	Button _btn;
+	Button _startBtn;
 	
 public:
 	bool init();

@@ -12,7 +12,9 @@ LOCAL_CFLAGS := -std=c++11
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(GLM_PATH)/include \
 					$(LOCAL_PATH)/$(SDL_PATH)/include \
 					$(LOCAL_PATH)/$(SRC_PATH)/include \
-					$(LOCAL_PATH)/$(SRC_PATH)/include/utils
+					$(LOCAL_PATH)/$(SRC_PATH)/include/core \
+					$(LOCAL_PATH)/$(SRC_PATH)/include/utils \
+					$(LOCAL_PATH)/$(SRC_PATH)/include/game
 
 
 FILE_LIST := $(wildcard $(LOCAL_PATH)/$(SRC_PATH)/src/*.cc)

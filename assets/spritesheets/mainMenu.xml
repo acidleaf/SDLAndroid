@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:01b16837ffee3018ce4470576a9bd439:a964f56e292c3a692e3f90c583f3860a:db4a52d05c2f78a977fb5c0b22a1130a$ -->
+<TextureAtlas imagePath="mainMenu.png">
+    <SubTexture name="start_btn_normal" x="2" y="2" width="200" height="40"/>
+    <SubTexture name="start_btn_pressed" x="204" y="2" width="200" height="40"/>
+</TextureAtlas>

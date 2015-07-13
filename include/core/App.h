@@ -24,7 +24,6 @@ private:
 	
 	FPSCounter _fps;
 	SceneManager _scene;
-	MainScene _scene1, _scene2;
 	
 	static int eventFilter(void* ptr, SDL_Event* e);
 	
@@ -43,6 +42,9 @@ public:
 	
 	int resX() const { return _resX; }
 	int resY() const { return _resY; }
+	
+	SceneManager* scene() { return &_scene; }
+	
 	
 	static App*& getInstance();
 };
