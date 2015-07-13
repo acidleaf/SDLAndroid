@@ -6,8 +6,10 @@
 #include "Tween.h"
 
 enum TransitionType {
+	TRANSITION_NONE,
 	TRANSITION_REPLACE,
-	TRANSITION_PUSH
+	TRANSITION_PUSH,
+	TRANSITION_POP
 };
 
 class IScene;
@@ -27,6 +29,8 @@ protected:
 	bool _transitioning = false;
 	
 	
+	void fadeOut();
+	void fadeIn();
 	static void fadeComplete(Tween* tween, void* data);
 	
 public:
@@ -37,9 +41,9 @@ public:
 	void render();
 	void handleEvents(const SDL_Event& e);
 	
-	void replace(IScene* scene);
-	void push(IScene* scene);
-	void pop();
+	void replace(IScene* scene, bool transition = true);
+	void push(IScene* scene, bool transition = true);
+	void pop(bool transition = true);
 	
 	IScene* activeScene();
 };
