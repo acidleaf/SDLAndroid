@@ -31,7 +31,7 @@ public:
 	
 	virtual size_t numChildren() const { return _numChildren; }
 	
-	virtual Sprite getSprite(const char* name) const;
+	virtual bool getSprite(const char* name, Sprite& sprite) const;
 	virtual bool getTexture(const char* name, SDL_Texture*& texture, SDL_Rect& rect) const;
 };
 

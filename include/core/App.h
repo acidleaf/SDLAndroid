@@ -16,7 +16,7 @@ private:
 	SDL_Window* _window = nullptr;
 	SDL_Renderer* _renderer = nullptr;
 	
-	int _resX, _resY;
+	int _resX, _resY, _pixelScale = 1;
 	bool _done = false;
 	bool _paused = false;
 	
@@ -28,7 +28,7 @@ private:
 	static int eventFilter(void* ptr, SDL_Event* e);
 	
 public:
-	bool init(const char* title);
+	bool init(int pixelScale = 1);
 	void release();
 	
 	void handleEvents();
@@ -45,6 +45,7 @@ public:
 	
 	SceneManager* scene() { return &_scene; }
 	
+	const int pixelScale() const { return _pixelScale; }
 	
 	static App*& getInstance();
 };

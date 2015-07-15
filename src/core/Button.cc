@@ -13,6 +13,7 @@ bool Button::init(const SpriteSheet* spritesheet, const char* normal, const char
 }
 
 void Button::render() {
+	auto app = App::getInstance();
 	glm::vec2 dstPos = _pos - ((glm::vec2)_size * _anchor);
 	SDL_Rect dst{ (int)dstPos.x, (int)dstPos.y, _size.x, _size.y };
 	

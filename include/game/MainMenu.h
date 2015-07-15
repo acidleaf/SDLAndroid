@@ -9,7 +9,8 @@
 class MainMenu : public IScene {
 protected:
 	SpriteSheet _ss;
-	Button _startBtn;
+	Sprite _panel;
+	Button _startBtn, _optionsBtn;
 	
 public:
 	bool init();

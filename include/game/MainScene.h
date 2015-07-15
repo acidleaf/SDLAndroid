@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "SpriteSheet.h"
 #include "Button.h"
+#include "Font.h"
 
 
 class MainScene : public IScene {
@@ -13,6 +14,8 @@ protected:
 	SpriteSheet _ss;
 	
 	glm::vec2 _v;
+	
+	FontAtlas _font;
 	
 	Button _btn;
 	

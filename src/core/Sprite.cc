@@ -77,11 +77,12 @@ void Sprite::release() {
 }
 
 void Sprite::render() {
+	auto app = App::getInstance();
 	glm::vec2 dstPos = _pos - ((glm::vec2)_size * _anchor);
 	SDL_Rect dst{ (int)dstPos.x, (int)dstPos.y, _size.x, _size.y };
 	
 	
 	SDL_SetTextureAlphaMod(_tex, _alpha * 255);	// Set alpha
-	SDL_RenderCopy(App::getInstance()->renderer(), _tex, &_srcRect, &dst);
+	SDL_RenderCopy(app->renderer(), _tex, &_srcRect, &dst);
 	SDL_SetTextureAlphaMod(_tex, 255);			// Reset alpha
 }

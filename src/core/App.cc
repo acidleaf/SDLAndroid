@@ -8,7 +8,8 @@ App*& App::getInstance() {
 	return _appInstance;
 }
 
-bool App::init(const char* title) {
+bool App::init(int pixelScale) {
+	_pixelScale = pixelScale;
 	
 	// Init SDL
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -21,6 +22,7 @@ bool App::init(const char* title) {
 	if (SDL_GetCurrentDisplayMode(0, &displayMode) == 0) {
 		_resX = displayMode.w;
 		_resY = displayMode.h;
+		
 	} else {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error retrieving display mode: %s", SDL_GetError());
 	}
@@ -28,7 +30,7 @@ bool App::init(const char* title) {
 	
 	
 	// Init window
-	_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _resX, _resY, 0);
+	_window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, _resX, _resY, 0);
 	if (!_window) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error creating window: %s\n", SDL_GetError());
 		return false;
@@ -40,9 +42,16 @@ bool App::init(const char* title) {
 		return false;
 	}
 	
+	// Set the pixel size
+	_resX /= _pixelScale;
+	_resY /= _pixelScale;
+	SDL_RenderSetLogicalSize(_renderer, _resX, _resY);
+	
 	// Setup event filters to handle entering background
 	SDL_SetEventFilter(eventFilter, this);
 	
+	// Use nearest neighbor filtering
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 	
 	SDL_version v;
 	SDL_GetVersion(&v);

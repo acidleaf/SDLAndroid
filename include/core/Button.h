@@ -31,7 +31,6 @@ public:
 	bool handleEvents(const SDL_Event& e);
 	
 	void onClick(BtnCallback callback, void* data);
-	//bool pressed() const { return _state == BTN_DOWN; }
 };
 
 #endif

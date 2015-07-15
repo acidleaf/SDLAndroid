@@ -4,7 +4,7 @@ int main(int argc,  char* argv[]) {
 	
 	App* app = App::getInstance();
 	
-	if (!app->init("SDLApp")) {
+	if (!app->init(2)) {
 		printf("Failed initializing app\n");
 		return -1;
 	}

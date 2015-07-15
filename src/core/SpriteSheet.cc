@@ -70,20 +70,20 @@ void SpriteSheet::release() {
 	SDL_DestroyTexture(_tex);
 }
 
-Sprite SpriteSheet::getSprite(const char* name) const {
+bool SpriteSheet::getSprite(const char* name, Sprite& sprite) const {
 	for (int i = 0; i < _numChildren; ++i) {
 		if (!strcmp(_subTex[i].name, name)) {
-			Sprite s;
-			s.init(_tex, {
+			sprite.init(_tex, {
 				(int)_subTex[i].pos.x,
 				(int)_subTex[i].pos.y,
 				(int)_subTex[i].size.x,
 				(int)_subTex[i].size.y
 			});
-			return s;
+			return true;
 		}
 	}
 	SDL_Log("Error: %s not found in sprite sheet", name);
+	return false;
 }
 
 bool SpriteSheet::getTexture(const char* name, SDL_Texture*& texture, SDL_Rect& rect) const {
