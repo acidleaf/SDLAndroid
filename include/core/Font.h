@@ -4,46 +4,30 @@
 #include "pch.hpp"
 #include "stb_truetype.h"
 
-
-class FontAtlas {
-protected:
-	stbtt_fontinfo _font;
-	stbtt_packedchar* _charData;
-	SDL_Texture* _tex = nullptr;
-	int _w = 0, _h = 0;
-	float _fontSize = 10.0f;
-	
-public:
-	bool init(const char* filename, int w, int h, float fontSize);
-	void release();
-	
-	void writeLine(const char* text, float x, float y);
-	int getTextW(const char* text) const;
-	
-	void renderAtlas();
+struct Font {
+	char name[MAX_NAME_SIZE];
+	int size = 0;
+	stbtt_packedchar* data = nullptr;
+	SDL_Texture* tex = nullptr;
 };
 
-/*
-class Font {
+class FontManager {
 protected:
-	stbtt_fontinfo _font;
-	stbtt_packedchar* _charData;
+	Font* _fonts = nullptr;
+	int _numFonts = 0;
+	char _buffer[256];
 	
-	uint8_t* _texData;
-	int _resX = 0, _resY = 0;
-	float _fontSize = 16.0f;
-	
+	bool createFontSize(uint8_t* ttf, int size, Font* font, uint8_t* texData, SDL_Surface* surface);
+	void releaseFont(Font* font);
 public:
-	bool init(const char* fontFile, int w, int h, float fontSize = 16.0f);
+	bool init();
 	void release();
 	
-	int getTextW(const char* text) const;
-	void writeLine(const char* text, float x, float y, uint8_t* image, int imgW, int imgH, int imgBpp);
+	const Font* getFont(const char* name, int size) const;
 	
-	void writeLine(const char* text, float x, float y);
-	
-	const uint8_t* texData() const { return _texData; }
+	size_t lineWidth(const Font* font, const char* fmt, ...);
+	void writeLine(const Font* font, float x, float y, const char* fmt, ...);
+	void writeRect(const Font* font, SDL_Rect rect, const char* text);
 };
-*/
 
 #endif

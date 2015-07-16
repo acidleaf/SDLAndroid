@@ -58,8 +58,11 @@ bool App::init(int pixelScale) {
 	SDL_Log("SDL version: %d.%d.%d\n", v.major, v.minor, v.patch);
 	
 	
+	if (!_fonts.init()) return false;
+	
 	if (!_scene.init()) return false;
 	_scene.push(_scene.mainMenu(), false);
+	
 	
 	
 	return true;
@@ -81,19 +84,7 @@ void App::handleEvents() {
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) _done = true;
-		
 		_scene.handleEvents(e);
-		
-		/*
-		if (e.type == SDL_FINGERDOWN) {
-			if (_scene.activeScene() == &_scene1) _scene.push(&_scene2);
-			//else if (_scene.activeScene() == &_scene2) _scene.replace(&_scene1);
-		} else if (e.type == SDL_KEYDOWN) {
-			if (e.key.keysym.sym == SDLK_AC_BACK) {
-				_scene.pop();
-			}
-		}
-		*/
 	}
 }
 

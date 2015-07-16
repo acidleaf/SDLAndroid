@@ -24,7 +24,7 @@ bool MainScene::init() {
 	
 	_v.x = 6.0f;
 	
-	_font.init("Cookie.ttf", 256, 256, 32);
+	_font = app->fonts()->getFont("04b03.ttf", 8);
 	
 	return true;
 }
@@ -33,7 +33,6 @@ void MainScene::release() {
 	_s1.release();
 	_s2.release();
 	_ss.release();
-	_font.release();
 }
 
 void MainScene::update() {
@@ -55,9 +54,17 @@ void MainScene::render() {
 	
 	_btn.render();
 	
-	//_font.renderAtlas();
+	auto app = App::getInstance();
+	auto fonts = App::getInstance()->fonts();
 	
-	_font.writeLine("Hello world!", 10, 20);
+	static int i = 0;
+	for (int i = 0; i < 10; ++i) {
+		fonts->writeLine(_font, 10, (i + 1) * _font->size, "Hello line %d", i);
+	}
+	
+	const char* something = "something something...";
+	int w = fonts->lineWidth(_font, something);
+	fonts->writeLine(_font, app->resX() - w, 10, something);
 }
 
 void MainScene::handleEvents(const SDL_Event& e) {

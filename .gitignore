@@ -4,3 +4,6 @@ android/bin/**
 android/gen/**
 android/libs/**
 android/obj/**
+
+# Won't commit media files for now
+media/**

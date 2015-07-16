@@ -15,7 +15,7 @@ protected:
 	
 	glm::vec2 _v;
 	
-	FontAtlas _font;
+	const Font* _font;
 	
 	Button _btn;
 	

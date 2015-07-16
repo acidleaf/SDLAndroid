@@ -5,6 +5,7 @@
 #include "FPS.h"
 #include "MainScene.h"
 #include "SceneManager.h"
+#include "Font.h"
 
 
 class App {
@@ -24,6 +25,7 @@ private:
 	
 	FPSCounter _fps;
 	SceneManager _scene;
+	FontManager _fonts;
 	
 	static int eventFilter(void* ptr, SDL_Event* e);
 	
@@ -42,10 +44,13 @@ public:
 	
 	int resX() const { return _resX; }
 	int resY() const { return _resY; }
+	const int pixelScale() const { return _pixelScale; }
+	
 	
 	SceneManager* scene() { return &_scene; }
+	FontManager* fonts() { return &_fonts; }
 	
-	const int pixelScale() const { return _pixelScale; }
+	
 	
 	static App*& getInstance();
 };
