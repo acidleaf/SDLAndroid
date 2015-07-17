@@ -17,6 +17,8 @@ bool App::init(int pixelScale) {
 		return false;
 	}
 	
+	
+#ifdef __ANDROID__
 	// Get display size since we're on mobile
 	SDL_DisplayMode displayMode;
 	if (SDL_GetCurrentDisplayMode(0, &displayMode) == 0) {
@@ -26,7 +28,10 @@ bool App::init(int pixelScale) {
 	} else {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Error retrieving display mode: %s", SDL_GetError());
 	}
-	
+#else
+	_resX = 360;
+	_resY = 640;
+#endif
 	
 	
 	// Init window
@@ -42,10 +47,12 @@ bool App::init(int pixelScale) {
 		return false;
 	}
 	
+#ifdef __ANDROID__
 	// Set the pixel size
 	_resX /= _pixelScale;
 	_resY /= _pixelScale;
 	SDL_RenderSetLogicalSize(_renderer, _resX, _resY);
+#endif
 	
 	// Setup event filters to handle entering background
 	SDL_SetEventFilter(eventFilter, this);
@@ -59,9 +66,9 @@ bool App::init(int pixelScale) {
 	
 	
 	if (!_fonts.init()) return false;
-	
+	_defaultFont = _fonts.getFont("04b03.ttf", 8);
 	if (!_scene.init()) return false;
-	_scene.push(_scene.mainMenu(), false);
+	_scene.push(_scene.mainScene(), false);
 	
 	
 	
@@ -104,11 +111,12 @@ void App::update() {
 		_nextTick += SKIP_TICKS;
 		++loops;
 		
-		_fps.update();
+		
 	}
 	
 	//float t = float(curTime + SKIP_TICKS - _nextTick) / (float)SKIP_TICKS;
 	render();
+	_fps.update();
 }
 
 void App::render() {
@@ -116,6 +124,9 @@ void App::render() {
 	
 	// Render stuff here
 	_scene.render();
+	
+	// Render FPS in bottom left
+	_fonts.writeLine(_defaultFont, 2, _resY - 2, "%.1f", _fps());
 	
 	SDL_RenderPresent(_renderer);
 }

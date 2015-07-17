@@ -7,7 +7,14 @@
 
 
 uint8_t* loadFileToBuffer(const char* filename, size_t* size) {
+#ifdef __ANDROID__
 	SDL_RWops* file = SDL_RWFromFile(filename, "rb");
+#else
+	// Load from assets folder if running on PC
+	char buffer[MAX_NAME_SIZE];
+	sprintf(buffer, "assets/%s", filename);
+	SDL_RWops* file = SDL_RWFromFile(buffer, "rb");
+#endif
 	if (!file) {
 		SDL_Log("Error loading file: %s", filename);
 		return nullptr;

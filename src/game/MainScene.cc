@@ -55,16 +55,18 @@ void MainScene::render() {
 	_btn.render();
 	
 	auto app = App::getInstance();
-	auto fonts = App::getInstance()->fonts();
+	auto fonts = app->fonts();
 	
 	static int i = 0;
 	for (int i = 0; i < 10; ++i) {
 		fonts->writeLine(_font, 10, (i + 1) * _font->size, "Hello line %d", i);
 	}
 	
-	const char* something = "something something...";
-	int w = fonts->lineWidth(_font, something);
-	fonts->writeLine(_font, app->resX() - w, 10, something);
+	const char* msg = "Lorem ipsum dolor sit amet\nconsectetur adipiscing elit. Nullam sem justo\nvenenatis ac convallis molestie, vulputate eu ligula.\nMorbi elementum, nisl eget tincidunt luctus,\nfelis libero volutpat nisi, id dignissim tortor augue at nunc.\n\n  Nam varius nec sem ac laoreet. Donec orci erat, lobortis id laoreet et, ullamcorper vitae mauris.\nNam id maximus lacus. Morbi convallis ullamcorper arcu vel ornare. Duis tempor tellus ut interdum convallis.";
+	SDL_Rect r{0, 200, app->resX(), 100};
+	//fonts->writeRect(_font, r, msg);
+	fonts->writeLine(_font, 0, 200, msg);
+	
 }
 
 void MainScene::handleEvents(const SDL_Event& e) {

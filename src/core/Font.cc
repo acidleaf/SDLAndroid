@@ -5,12 +5,6 @@
 #include "App.h"
 #include "Utils.h"
 
-#define GLYPH_START 0x20
-#define GLYPH_END 0x7E
-#define NUM_GLYPHS (GLYPH_END - GLYPH_START)
-#define TEX_W 128
-#define TEX_H 256
-
 
 bool FontManager::init() {
 	_numFonts = 4;
@@ -110,7 +104,6 @@ size_t FontManager::lineWidth(const Font* font, const char* fmt, ...) {
 	va_end(args);
 	
 	stbtt_aligned_quad q;
-	int width = 0;
 	float curX = 0, curY = 0;
 	for (int t = 0; _buffer[t]; ++t) {
 		int c = _buffer[t] - GLYPH_START;
@@ -130,15 +123,80 @@ void FontManager::writeLine(const Font* font, float x, float y, const char* fmt,
 	auto app = App::getInstance();
 	float curX = x, curY = y;
 	stbtt_aligned_quad q;
-	
-	for (int t = 0; _buffer[t]; ++t) {
+	int lines = 0;
+	for (int t = 0; _buffer[t] && t < BUFFER_SIZE; ++t) {
+		if (_buffer[t] == '\n') {
+			++lines;
+			curX = x;
+			curY = y + lines * font->size;
+			continue;
+		}
 		int ci = _buffer[t] - GLYPH_START;
 		stbtt_GetPackedQuad(font->data, TEX_W, TEX_H, ci, &curX, &curY, &q, 1);
 		
 		const auto& c = font->data[ci];
 		SDL_Rect src{ (int)c.x0, (int)c.y0, (int)(c.x1 - c.x0), (int)(c.y1 - c.y0) };
-		SDL_Rect dst{ (int)q.x0, (int)q.y0, (int)(q.x1 - q.x0), (int)(q.y1 - q.y0) };
+		SDL_Rect dst{ (int)(q.x0), (int)(q.y0), (int)(q.x1 - q.x0), (int)(q.y1 - q.y0) };
 		
 		SDL_RenderCopy(app->renderer(), font->tex, &src, &dst);
+	}
+	_lastLineW = curX - x;
+}
+
+void FontManager::writeRect(const Font* font, SDL_Rect rect, const char* text) {
+	if (!font) return;
+	
+	auto app = App::getInstance();
+	int curLine = 0;
+	float cx = rect.x, cy = rect.y;
+	stbtt_aligned_quad q;
+	
+	while (*text) {
+		float curW = 0.0f;
+		const char* start = text;
+		const char* lastSpace = text;
+		int revCount = 0;
+		// Advance through until the text overflows or text ends
+		while (*text && curW < rect.w) {
+			float dx = 0.0f, dy = 0.0f;
+			bool stop = false;
+			if (*text == ' ') {
+				lastSpace = text;
+				revCount = 0;
+			} else if (*text == '\n') {
+				lastSpace = text;
+				stop = true;
+			}
+			
+			int ci = *text - GLYPH_START;
+			stbtt_GetPackedQuad(font->data, TEX_W, TEX_H, ci, &dx, &dy, &q, 1);
+			curW += dx;
+			++text;
+			++revCount;
+			if (stop) {
+				revCount = 0;
+				break;
+			}
+		}
+		
+		// Print from start until lastSpace
+		for (const char* t = start; t != lastSpace; ++t) {
+			int ci = *t - GLYPH_START;
+			stbtt_GetPackedQuad(font->data, TEX_W, TEX_H, ci, &cx, &cy, &q, 1);
+			
+			const auto& c = font->data[ci];
+			SDL_Rect src{ (int)c.x0, (int)c.y0, (int)(c.x1 - c.x0), (int)(c.y1 - c.y0) };
+			SDL_Rect dst{ (int)q.x0, (int)q.y0, (int)(q.x1 - q.x0), (int)(q.y1 - q.y0) };
+			
+			SDL_RenderCopy(app->renderer(), font->tex, &src, &dst);
+		}
+		
+		// Line printed! Update cursor
+		++curLine;
+		cx = rect.x;
+		cy = rect.y + curLine * font->size;
+		
+		// Rewind until last space + 1
+		text -= (revCount - 1);
 	}
 }

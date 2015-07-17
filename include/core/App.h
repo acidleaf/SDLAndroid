@@ -17,6 +17,7 @@ private:
 	SDL_Window* _window = nullptr;
 	SDL_Renderer* _renderer = nullptr;
 	
+	
 	int _resX, _resY, _pixelScale = 1;
 	bool _done = false;
 	bool _paused = false;
@@ -26,6 +27,8 @@ private:
 	FPSCounter _fps;
 	SceneManager _scene;
 	FontManager _fonts;
+	
+	const Font* _defaultFont = nullptr;
 	
 	static int eventFilter(void* ptr, SDL_Event* e);
 	

@@ -7,3 +7,6 @@ android/obj/**
 
 # Won't commit media files for now
 media/**
+
+bin/**
+obj/**
