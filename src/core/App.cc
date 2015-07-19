@@ -110,8 +110,15 @@ void App::update() {
 		
 		_nextTick += SKIP_TICKS;
 		++loops;
-		
-		
+	}
+	
+	// _dt holds the delta time between renders, needed for animation
+	if (!_prevTick) {
+		_prevTick = curTime;
+		_dt = 0;
+	} else {
+		_dt = curTime - _prevTick;
+		_prevTick = curTime;
 	}
 	
 	//float t = float(curTime + SKIP_TICKS - _nextTick) / (float)SKIP_TICKS;
@@ -126,7 +133,7 @@ void App::render() {
 	_scene.render();
 	
 	// Render FPS in bottom left
-	_fonts.writeLine(_defaultFont, 2, _resY - 2, "%.1f", _fps());
+	_fonts.writeLine(_defaultFont, 2, _resY - 2, "%.1f %d", _fps(), _dt);
 	
 	SDL_RenderPresent(_renderer);
 }

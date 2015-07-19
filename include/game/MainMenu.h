@@ -3,12 +3,12 @@
 
 #include "pch.hpp"
 #include "IScene.h"
-#include "SpriteSheet.h"
+#include "TextureAtlas.h"
 #include "Button.h"
 
 class MainMenu : public IScene {
 protected:
-	SpriteSheet _ss;
+	TextureAtlas _ss;
 	Sprite _panel;
 	Button _startBtn, _optionsBtn;
 	

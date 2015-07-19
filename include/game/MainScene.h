@@ -3,23 +3,20 @@
 
 #include "IScene.h"
 #include "Sprite.h"
-#include "SpriteSheet.h"
-#include "Button.h"
+#include "TextureAtlas.h"
 #include "Font.h"
+#include "AnimSprite.h"
 
 
 class MainScene : public IScene {
 protected:
 	Sprite _s1, _s2;
-	SpriteSheet _ss;
+	AnimSprite _as;
+	TextureAtlas _ss;
 	
 	glm::vec2 _v;
 	
 	const Font* _font;
-	
-	Button _btn;
-	
-	void btnClicked(Button* target);
 	
 public:
 	bool init();

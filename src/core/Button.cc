@@ -2,10 +2,10 @@
 #include "App.h"
 #include "Utils.h"
 
-bool Button::init(const SpriteSheet* spritesheet, const char* normal, const char* pressed) {
+bool Button::init(const TextureAtlas* atlas, const char* normal, const char* pressed) {
 	// Assuming that they all exist in the same texture
-	if (!spritesheet->getTexture(normal, _tex, _rects[BTN_UP])) return false;
-	if (!spritesheet->getTexture(pressed, _tex, _rects[BTN_DOWN])) return false;
+	if (!atlas->getTexture(normal, _tex, _rects[BTN_UP])) return false;
+	if (!atlas->getTexture(pressed, _tex, _rects[BTN_DOWN])) return false;
 	
 	_size = { _rects[BTN_UP].w, _rects[BTN_UP].h };
 	

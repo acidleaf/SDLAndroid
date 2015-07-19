@@ -4,6 +4,7 @@
 #include "pch.hpp"
 
 class Timer {
+protected:
 public:
 	static uint32_t getTimeMs() { return SDL_GetTicks(); }
 	static double getTime() { return SDL_GetTicks() * 0.001; }

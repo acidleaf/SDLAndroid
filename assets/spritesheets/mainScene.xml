@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Sprite Sheet Editor v0.8.2 -->
+<!-- http://zengrong.net/sprite_sheet_editor -->
+<TextureAtlas imagePath="mainScene.png">
+  <SubTexture name="circle" x="0" y="0" width="101" height="101" frameX="0" frameY="0" frameWeight="101" frameHeight="101"/>
+  <SubTexture name="logo" x="0" y="101" width="113" height="101" frameX="0" frameY="0" frameWeight="113" frameHeight="101"/>
+  <SubTexture name="frames" x="0" y="202" width="256" height="256" frameX="0" frameY="0" frameWeight="256" frameHeight="256"/>
+</TextureAtlas>

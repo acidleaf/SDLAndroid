@@ -1,9 +1,9 @@
-#include "SpriteSheet.h"
+#include "TextureAtlas.h"
 #include "pugixml.hpp"
 #include "Utils.h"
 #include "App.h"
 
-bool SpriteSheet::init(const char* filename) {
+bool TextureAtlas::init(const char* filename) {
 	// Load spritesheet xml
 	size_t xmlSize;
 	uint8_t* xmlData = loadFileToBuffer(filename, &xmlSize);
@@ -65,12 +65,12 @@ bool SpriteSheet::init(const char* filename) {
 	return true;
 }
 
-void SpriteSheet::release() {
+void TextureAtlas::release() {
 	if (_subTex) delete[] _subTex;
 	SDL_DestroyTexture(_tex);
 }
 
-bool SpriteSheet::getSprite(const char* name, Sprite& sprite) const {
+bool TextureAtlas::getSprite(const char* name, Sprite& sprite) const {
 	for (int i = 0; i < _numChildren; ++i) {
 		if (!strcmp(_subTex[i].name, name)) {
 			sprite.init(_tex, {
@@ -86,7 +86,7 @@ bool SpriteSheet::getSprite(const char* name, Sprite& sprite) const {
 	return false;
 }
 
-bool SpriteSheet::getTexture(const char* name, SDL_Texture*& texture, SDL_Rect& rect) const {
+bool TextureAtlas::getTexture(const char* name, SDL_Texture*& texture, SDL_Rect& rect) const {
 	for (int i = 0; i < _numChildren; ++i) {
 		if (!strcmp(_subTex[i].name, name)) {
 			texture = _tex;

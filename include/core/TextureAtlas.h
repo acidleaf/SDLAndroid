@@ -1,5 +1,5 @@
-#ifndef __SPRITESHEET_H___
-#define __SPRITESHEET_H___
+#ifndef __TEXTUREATLAS_H___
+#define __TEXTUREATLAS_H___
 
 #include "pch.hpp"
 #include "Sprite.h"
@@ -9,7 +9,7 @@
 	Using Zwoptex to generate the spritesheets.
 */
 
-class SpriteSheet {
+class TextureAtlas {
 protected:
 	struct SubTexture {
 		char name[MAX_NAME_SIZE];

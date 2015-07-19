@@ -3,7 +3,7 @@
 
 #include "pch.hpp"
 #include "Sprite.h"
-#include "SpriteSheet.h"
+#include "TextureAtlas.h"
 
 enum ButtonState {
 	BTN_UP,
@@ -26,7 +26,7 @@ protected:
 	void* _callbackData = nullptr;
 	
 public:
-	bool init(const SpriteSheet* spritesheet, const char* normal, const char* pressed);
+	bool init(const TextureAtlas* atlas, const char* normal, const char* pressed);
 	void render();
 	bool handleEvents(const SDL_Event& e);
 	

@@ -23,6 +23,8 @@ private:
 	bool _paused = false;
 	
 	uint32_t _nextTick = 0;
+	uint32_t _prevTick = 0;
+	uint32_t _dt = 0;
 	
 	FPSCounter _fps;
 	SceneManager _scene;
@@ -45,9 +47,12 @@ public:
 	SDL_Window* window() { return _window; }
 	SDL_Renderer* renderer() { return _renderer; }
 	
+	
 	int resX() const { return _resX; }
 	int resY() const { return _resY; }
-	const int pixelScale() const { return _pixelScale; }
+	int pixelScale() const { return _pixelScale; }
+	
+	float dt() const { return _dt * 0.001f; }
 	
 	
 	SceneManager* scene() { return &_scene; }
